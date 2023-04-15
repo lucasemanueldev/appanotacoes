@@ -1,13 +1,35 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, AsyncStorage } from 'react-native';
 
 export default function App() {
   const [estado, setarEstado] = useState('leitura');
   const [anotacao, setarAnotacao] = useState('')
 
+  useEffect(() => {
+    (async () => {
+      try{
+        const anotacaoLer = await AsyncStorage.getItem('anotacao')
+        setarAnotacao(anotacaoLer)
+      }catch(error){
+
+      }
+    })();
+  },[])
+
+  salvarDados =  async() => {
+    try{
+      await AsyncStorage.setItem('anotacao',anotacao);
+    }catch(error){
+
+    }
+
+    alert(' Sua anotação foi salva com sucesso! 😉')
+  }
+
   function atualizarAnotacao() {
     setarEstado('leitura')
+    salvarDados()
   }
   if (estado == 'leitura') {
     return (
@@ -37,7 +59,7 @@ export default function App() {
         <StatusBar hidden />
         <View style={styles.header}><Text style={{ textAlign: 'center', color: 'white', fontSize: 18 }}>nãoEsquece!</Text></View>
 
-        <TextInput style={styles.anotacao}
+        <TextInput autoFocus={true} style={styles.anotacao}
           onChangeText={(text) => setarAnotacao(text)} multiline={true} numberOfLines={5} value={anotacao}>
         </TextInput>
 
