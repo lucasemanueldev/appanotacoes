@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React,{ useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
 
 export default function App() {
 
@@ -25,7 +25,9 @@ export default function App() {
         <StatusBar hidden/>
         <View style={styles.header}><Text style={{textAlign:'center',color:'white',fontSize:18}}>nãoEsquece!</Text></View>
         
-        
+        <TextInput style={styles.anotacao} 
+         onChangeText={(text)=>setarAnotacao(text)} multiline={true} numberOfLines={5} value={anotacao}>          
+         </TextInput>
 
         <TouchableOpacity onPress={()=> setarEstado('leitura')} style={styles.btnSalvar}><Text style={{textAlign:'center',color:'white'}}>Salvar</Text></TouchableOpacity>
       </View>
@@ -44,7 +46,10 @@ const styles = StyleSheet.create({
       anotacao:{
         fontSize:14,
         color: '#ffffe0',
-        fontStyle: 'italic'
+        fontStyle: 'italic',
+        textAlignVertical: 'top',
+        height: 300,
+        padding: 20
       },
       btnAnotacao:{
         position:'absolute',
@@ -69,6 +74,7 @@ const styles = StyleSheet.create({
         width:100,
         paddingTop:10,
         paddingBottom:10,
+        borderRadius: 8,
         backgroundColor:'#300053',
       },
       viewGeral: {
